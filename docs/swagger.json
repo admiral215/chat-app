@@ -1,0 +1,197 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample API Chat App using Gin and Swaggo",
+        "title": "Chat-App API",
+        "contact": {
+            "name": "@rullyadmiral",
+            "url": "https://github.com/admiral215",
+            "email": "rullyadmiral@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "description": "Returns a token for authorization",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Login credentials",
+                        "name": "loginRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "description": "Register user",
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register",
+                "parameters": [
+                    {
+                        "description": "User credentials",
+                        "name": "userDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UserCreate"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/groups": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a group chat",
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Create a group chat",
+                "parameters": [
+                    {
+                        "description": "group insert",
+                        "name": "userDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.GroupCreate"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/ws": {
+            "get": {
+                "description": "Establish a WebSocket connection for real-time communication",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "WebSocket"
+                ],
+                "summary": "WebSocket Connection (Can't to try)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "101": {
+                        "description": "Switching Protocols",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/ws/send": {
+            "post": {
+                "description": "Send a JSON payload through the established WebSocket connection.\nExample JSON payload for sending a message:\n```json\n{\n\"type\": \"private/group\",\n\"content\": \"test chat\",\n\"recipient_id\": \"group_id/user_id\"\n}",
+                "tags": [
+                    "WebSocket"
+                ],
+                "summary": "Send a message via WebSocket (Can't to try)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dto.GroupCreate": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 100
+                }
+            }
+        },
+        "dto.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UserCreate": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

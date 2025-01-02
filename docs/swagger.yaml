@@ -1,0 +1,139 @@
+definitions:
+  dto.GroupCreate:
+    properties:
+      members:
+        items:
+          type: string
+        type: array
+      name:
+        maxLength: 100
+        type: string
+    required:
+    - name
+    type: object
+  dto.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.UserCreate:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: rullyadmiral@gmail.com
+    name: '@rullyadmiral'
+    url: https://github.com/admiral215
+  description: This is a sample API Chat App using Gin and Swaggo
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  title: Chat-App API
+  version: "1.0"
+paths:
+  /api/auth/login:
+    post:
+      description: Returns a token for authorization
+      parameters:
+      - description: Login credentials
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      responses: {}
+      summary: Login
+      tags:
+      - Auth
+  /api/auth/register:
+    post:
+      description: Register user
+      parameters:
+      - description: User credentials
+        in: body
+        name: userDto
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserCreate'
+      responses: {}
+      summary: Register
+      tags:
+      - Auth
+  /api/groups:
+    post:
+      description: Create a group chat
+      parameters:
+      - description: group insert
+        in: body
+        name: userDto
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GroupCreate'
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Create a group chat
+      tags:
+      - Group
+  /api/ws:
+    get:
+      description: Establish a WebSocket connection for real-time communication
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "101":
+          description: Switching Protocols
+          schema:
+            type: string
+      summary: WebSocket Connection (Can't to try)
+      tags:
+      - WebSocket
+  /api/ws/send:
+    post:
+      description: |-
+        Send a JSON payload through the established WebSocket connection.
+        Example JSON payload for sending a message:
+        ```json
+        {
+        "type": "private/group",
+        "content": "test chat",
+        "recipient_id": "group_id/user_id"
+        }
+      parameters:
+      - description: Bearer {token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      responses: {}
+      summary: Send a message via WebSocket (Can't to try)
+      tags:
+      - WebSocket
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

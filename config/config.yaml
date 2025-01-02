@@ -1,0 +1,18 @@
+app:
+  name: "chat-app"
+  version: "1.0.0"
+  port: "8080"
+  debug: true
+
+database:
+  host: "localhost"
+  port: "5432"
+  name: "chat-app"
+  user: "postgres"
+  password: "postgres"
+  sslmode: "disable"
+  timezone: "Asia/Jakarta"
+
+jwt:
+  secret: "35adce7b88145351cc3fddc70db30122274be1ee5dc67acc05eb6aaa202d8ca36c928fb6699686167779377d9a946cd6ab9c1a09d1e642bbd700a5e2463979fab97dd0d549a158ed481158a51d1b472f2edbe31672d4e3e16465e104fdc03f49cadb88d9fbdb6dbecfc03cfe9c8931a1ffb38da17621e350b20ec29f6dbc5105e0e4323c894310f79bfe95667b4b4f12f5eb733d0a3419540f82be8da86b0b76aea3f5d5b3546c56274a1ade220757617518edf07e12614ab4bcf3945601e41cba3b450d25b832670c986cee1868b0074cf165c8fceefc7239f20f1afd1a2a70dbee3ce865051435eba491722e53b269c55651a602e0548dd0ee43a403d6f266"
+  expire_time: 24
