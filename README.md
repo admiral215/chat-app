@@ -56,7 +56,7 @@ Before you start, ensure you have the following installed:
 
    The app will start running on `http://localhost:8080`.
 
-5. 6. Access the Swagger Documentation:
+5. Access the Swagger Documentation:
    Once your app is running, navigate to `http://localhost:8080/swagger/index.html#/` in your browser.
 
    You should now see the Swagger UI with your API documentation, including the ability to try out the API endpoints directly from the Swagger interface.
